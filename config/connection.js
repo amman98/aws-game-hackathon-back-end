@@ -1,3 +1,5 @@
+// TODO: reconfigure to connect to AWS Amplify
+
 const Sequelize = require('sequelize');
 require('dotenv').config();
 
