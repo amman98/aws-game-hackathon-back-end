@@ -1,18 +1,18 @@
-const express = require('express');
-const allRoutes = require('./controllers');
-const sequelize = require('./config/connection');
-const http = require("http");
-const cors = require("cors");
+import express from 'express';
+import userRoute from './controllers/userDetailsController.js'
+import sequelize from './config/connection.js';
+import http from "http";
+import cors from "cors";
 
 // Sets up the Express App
 const app = express();
 const PORT = process.env.PORT || 3001;
 
 // Sets up the Express app to handle data parsing
-app.use(express.urlencoded({ extended: true }));
+app.use(express.json({ extended: true }));
 app.use(express.json());
 app.use(cors());
-app.use('/',allRoutes);
+app.use('/',userRoute);
 
 const server = http.createServer(app);
 
