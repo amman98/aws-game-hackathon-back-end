@@ -1,10 +1,16 @@
 import express from "express";
 const router = express.Router();
+import Sequelize from "sequelize";
 import UserDetails from "../models/UserDetails.js";
 
 // get all users
 router.get("/", async (req, res) => {
-    UserDetails.findAll()
+    UserDetails.findAll({
+        where: {
+            score: { [Sequelize.Op.ne]: null }
+        },
+        order: [['score', 'DESC']]
+    })
     .then(userData => {
         res.json(userData);
     }).catch(err => {
@@ -48,7 +54,10 @@ router.put('/:id', async (req, res) => {
             return res.status(404).json({ msg: "no such user" });
         }
 
-        await userData.update({ score });
+        const currentScore = userData.score;
+        const newScore = currentScore === null ? score : Math.max(currentScore, score);
+
+        await userData.update({ score: newScore });
         
         res.status(200).json(userData);
     } catch (err) {

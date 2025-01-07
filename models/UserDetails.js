@@ -18,7 +18,6 @@ UserDetails.init(
         },
         score: {
             type: DataTypes.INTEGER,
-            allowNull: false, // UserDetails adds record only after user plays the game and receives a score
         },
     },{
         sequelize,
